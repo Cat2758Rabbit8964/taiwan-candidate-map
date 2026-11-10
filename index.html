@@ -90,7 +90,9 @@ select{font-family:var(--serif);border:1px solid var(--line);border-radius:2px;b
 /* 結果:百分比像蓋上的數字印 */
 .pct{font-family:var(--serif);color:var(--red);font-size:2.3rem;letter-spacing:.02em}
 .meter{height:6px;background:var(--line);border-radius:0}.meter i{background:var(--red)}
-.toplink{color:var(--red);font-family:var(--kai)}
+.toplink{--lk:#c2570c;color:var(--lk);font-weight:700;border:1.5px solid var(--lk);border-radius:999px;padding:0 14px;min-height:36px;background:color-mix(in srgb,var(--lk) 10%,transparent);transition:background .15s,color .15s}
+.toplink:hover{background:var(--lk);color:#fff}
+@media (prefers-color-scheme:dark){.toplink{--lk:#ffb066}.toplink:hover{color:#1e1a13}}
 .tag{border-radius:2px;border-color:var(--line)}
 .warn,.proto{border-radius:2px;font-family:var(--serif)}
 .proto{background:transparent;border:1px dashed var(--warn-line);color:var(--mute)}
