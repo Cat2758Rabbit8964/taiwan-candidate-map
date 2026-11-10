@@ -8,7 +8,7 @@ export const COLUMNS: Column[] = ['民進黨', '其他黨', '民眾黨', '國民
 /** 紀事來源的 5 家與其他比對媒體 */
 export const CORE_OUTLETS = ['華視', '公視', '民視', '鏡新聞', '自由', '三立', '東森'] as const
 export const OTHER_OUTLETS = ['台視', '中天', '聯合報', '中時', 'ETtoday', '壹電視', 'TVBS'] as const
-/** 圖上代表「作者對事件本身的判斷」的點,不是媒體 */
+/** 圖上代表「查核團隊對事件本身的判斷」的點,不是媒體 */
 export const JUDGE = '事實分析'
 export const OUTLETS: string[] = [...CORE_OUTLETS, ...OTHER_OUTLETS]
 

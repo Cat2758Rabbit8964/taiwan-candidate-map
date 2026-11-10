@@ -43,7 +43,7 @@ function fillFor(county: County | undefined) {
 
 export default function App() {
   const [selected, setSelected] = useState<County | null>(null)
-  // 網址帶 ?why-news 時直接開啟「為什麼選擇這些新聞」(供外部站台直達連結)
+  // 網址帶 ?why-news 時直接開啟「媒體立場分析」(供外部站台直達連結)
   const [showCoverage, setShowCoverage] = useState(() => new URLSearchParams(window.location.search).has('why-news'))
 
   const { main, insets } = useMemo(() => {
@@ -118,7 +118,7 @@ export default function App() {
           </li>
         ))}
       </ul>
-      <button type="button" className="why-news" onClick={() => setShowCoverage(true)}>為什麼選擇這些新聞</button>
+      <button type="button" className="why-news" onClick={() => setShowCoverage(true)}>媒體立場分析</button>
       </div>
 
       <BillZone />
@@ -132,8 +132,8 @@ export default function App() {
         </p>
         <p>紀事的新聞來源僅限華視、公視、民視、鏡新聞、自由時報、三立、東森與官方紀錄。</p>
         <p>
-          本站由個人作者製作與維護,非政黨、候選人或媒體所設,不是民調,不推薦或反對任何候選人;
-          各頁分數與判斷為作者個人判斷,不是事實認定,也不具官方效力。
+          本站由查核團隊製作與維護,非政黨、候選人或媒體所設,不是民調,不推薦或反對任何候選人;
+          各頁分數與判斷為查核團隊的判斷,不是事實認定,也不具官方效力。
         </p>
         <p>
           發現錯誤或不實,請至
