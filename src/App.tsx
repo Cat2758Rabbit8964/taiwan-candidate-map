@@ -43,7 +43,8 @@ function fillFor(county: County | undefined) {
 
 export default function App() {
   const [selected, setSelected] = useState<County | null>(null)
-  const [showCoverage, setShowCoverage] = useState(false)
+  // 網址帶 ?why-news 時直接開啟「為什麼選擇這些新聞」(供外部站台直達連結)
+  const [showCoverage, setShowCoverage] = useState(() => new URLSearchParams(window.location.search).has('why-news'))
 
   const { main, insets } = useMemo(() => {
     const topo = countiesTopo as unknown as Topology
