@@ -126,3 +126,5 @@ section h4 { margin: 16px 0 6px; font-size: .95rem; }
 
 .bill-sub { font-size: .92rem; margin: 12px 0 4px; }
 .bill-issues .bill-links { display: flex; margin-top: 2px; }
+.cov-hl { color: #c2570c; background: color-mix(in srgb, #c2570c 12%, transparent); padding: 0 4px; border-radius: 3px; }
+@media (prefers-color-scheme: dark) { .cov-hl { color: #ffb066; } }

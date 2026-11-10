@@ -330,7 +330,7 @@ export function CoverageDialog({ onClose }: { onClose: () => void }) {
       </p>
 
       <p className="cov-lead">
-        本站收錄 {OUTLETS.length} 家媒體的報導,採用標題語氣與事實一致程度最高的新聞。
+        本站收錄 {OUTLETS.length} 家媒體的報導,分析各家新聞的<strong className="cov-hl">標題</strong>與<strong className="cov-hl">事實</strong>一致性。
         下面把 {EVENTS.length} 個事件、{REPORTS.length} 則報導(查詢日期 {PILOT_QUERY_DATE})畫成圖,看各家標題留給人的印象。
       </p>
 
