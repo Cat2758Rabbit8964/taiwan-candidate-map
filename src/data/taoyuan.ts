@@ -83,6 +83,7 @@ const CHANG: Profile = {
 const HUANG: Profile = {
   collected: true,
   entries: [
+    e({ date: '2023-01-07', summary: '黃世杰 2022 年 2 至 5 月(第 10 屆第 5 會期)擔任立法院司法及法制委員會召集委員,該委員會同會期初審刑法性影像條文修正草案,多項條文保留交黨團協商;該章(妨害性隱私及不實性影像罪,第 319 條之 1 至之 6)於 2023-01-07 三讀。依報導與立法院官方名單,他當時是召委;三讀前的協商階段(第 6 會期)他不是召委,協商與提案紀錄未查得,不列入。', category: '政績', domains: ['社福'], context: '議會或立法院提案', source: { outlet: '官方', url: 'https://www.ly.gov.tw/Pages/Detail.aspx?nodeid=43625&pid=217581', title: '立法院:司法及法制委員會第 10 屆第 5 會期委員名單' }, others: [{ outlet: '自由時報', url: 'https://news.ltn.com.tw/news/politics/breakingnews/3850931', title: '立院8委員會召委選舉 藍綠分庭抗禮各擁8席' }, { outlet: '自由時報', url: 'https://news.ltn.com.tw/news/politics/breakingnews/4177587', title: '遏止換臉犯罪!刑法三讀修正 不實性影像營利最重判7年' }] }),
     e({
       date: '2026-10-13',
       summary: '國民黨與民眾黨質疑黃世杰 10 月 3 日中壢造勢場地為農田水利署土地,是否依法核准;黃世杰表示依法申請、無特權。',
