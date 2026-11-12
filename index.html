@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>找適合您的候選人</title>
+<title>找到契合您的候選人</title>
 <style>
 :root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--mute:#5b6577;--line:#d9dee7;--accent:#2b5fd9;--accent-ink:#fff;--warn-bg:#fff6e0;--warn-line:#e0b84a}
 @media (prefers-color-scheme:dark){:root{--bg:#14171d;--card:#1d222b;--ink:#e8ebf1;--mute:#a1abbd;--line:#333b49;--accent:#7aa2ff;--accent-ink:#0d1220;--warn-bg:#2d2610;--warn-line:#8a7126}}
@@ -103,10 +103,33 @@ summary{font-family:var(--kai);letter-spacing:.1em}
 .mapbtn{letter-spacing:.2em}
 /* 入場動畫:卡片像紙張輕輕落下 */
 @media (prefers-reduced-motion:no-preference){.card,h2,h1{animation:drop .5s ease both}@keyframes drop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}}
+.topbar{position:sticky;top:0;z-index:20;padding:10px 12px 14px;background:linear-gradient(var(--bg) 60%,transparent);pointer-events:none}
+.topbar .homebtn{pointer-events:auto;background:var(--bg)}
+.homebtn{font:inherit;font-size:.9rem;font-weight:600;color:var(--mute);background:transparent;border:1px solid var(--line);border-radius:999px;padding:0 14px;min-height:36px;cursor:pointer}
+.homebtn:hover{color:var(--accent);border-color:var(--accent)}
+dialog#leave{border:1px solid var(--line);border-radius:3px;background:var(--card);color:var(--ink);max-width:min(380px,calc(100% - 32px));padding:20px;box-shadow:0 0 0 4px var(--card),0 0 0 5px var(--line),0 16px 40px -12px rgba(0,0,0,.5)}
+dialog#leave::backdrop{background:rgba(20,16,10,.55)}
+dialog#leave h2{margin:0 0 8px;font-size:1.1rem;color:var(--accent)}
+dialog#leave p{margin:0 0 16px}
+.leave-btns{display:flex;gap:10px}
 </style>
 </head>
 <body>
+<div class="topbar"><button type="button" class="homebtn" id="homebtn">← 回到貓貓冊店</button></div>
 <main id="app" aria-live="polite"></main>
+<dialog id="leave" aria-labelledby="leave-t">
+<form method="dialog">
+<h2 id="leave-t">要離開問卷嗎?</h2>
+<p>離開後,您目前填答的內容會消失,回來要重新作答。</p>
+<div class="leave-btns"><button type="submit" class="btn" value="back" autofocus>返回</button><button type="button" class="btn primary" id="leave-go">繼續</button></div>
+</form>
+</dialog>
+<script>
+(function(){var d=document.getElementById('leave');
+document.getElementById('homebtn').onclick=function(){d.showModal()};
+document.getElementById('leave-go').onclick=function(){location.href='https://cat2758rabbit8964.github.io/niau-niau-tsheh-tiam/'};
+d.addEventListener('click',function(e){if(e.target===d)d.close()});})();
+</script>
 <script>
 /* ===== 題目與資料 ===== */
 const FACETS=['兩岸與國安','政黨','候選人特質','施政方向'];
@@ -232,7 +255,7 @@ function progress(){return `<div class="bar" role="progressbar" aria-valuemin="0
 function render(){
   const s=steps[i];let h='';
   if(s.k==='county'){
-    h=`<h1>找適合您的候選人</h1><p class="note">回答約 15 題,看看您所在縣市的縣市長候選人與您有多契合。<b>您的答案不會離開這台裝置。</b></p>
+    h=`<h1>找到契合您的候選人</h1><p class="note">回答約 15 題,看看您所在縣市的縣市長候選人與您有多契合。<b>您的答案不會離開這台裝置。</b></p>
     <div class="card"><label for="c"><b>您的縣市</b></label><p class="note">預設為您在地圖上最後點選的縣市。</p>
     <select id="c" onchange="county=this.value">${COUNTIES.map(c=>`<option ${c===county?'selected':''}>${c}</option>`).join('')}</select></div>
     <p class="note">契合度只反映您和候選人在這幾題上的相近程度,不代表好壞。</p>`+nav(true,'開始');
