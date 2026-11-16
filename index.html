@@ -112,6 +112,12 @@ dialog#leave::backdrop{background:rgba(20,16,10,.55)}
 dialog#leave h2{margin:0 0 8px;font-size:1.1rem;color:var(--accent)}
 dialog#leave p{margin:0 0 16px}
 .leave-btns{display:flex;gap:10px}
+.rem{margin:14px 0 0;padding-top:12px;border-top:1px dashed var(--line)}
+.rem:first-of-type{border-top:0;padding-top:0}
+.rem>b{display:block;font-size:1.02rem;margin-bottom:4px}
+.rem ul{margin:0;padding-left:1.2em}
+.rem li{margin:6px 0;line-height:1.65}
+.rem .rdate{display:inline-block;font-size:.8rem;color:var(--mute);background:color-mix(in srgb,var(--line) 55%,transparent);border-radius:3px;padding:0 6px;margin-right:8px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -347,7 +353,7 @@ function result(){
     ${sparse?'<p class="note" style="margin:6px 0 0">多數題目查無資訊'+(DEV?'(以 33.3% 計)':'')+'</p>':''}
     ${shown.length?`<details><summary>相關事蹟</summary>${shown.map(x=>`<p style="margin-bottom:4px"><b>${x.f}</b></p>`+x.rows.map(({q,hit})=>hit.facts?`<div class="ev"><span class="tag party">依政黨推定:${c.p}</span> <span class="tag">${hit.v>=.5?'正向':hit.v>0?'部分':'負向'}</span>${hit.facts.map(f=>`<div style="margin-top:6px">${f.tag==='ref'?'<span class="tag">對照事實</span>':''}${f.dom?` <span class="tag">${f.dom}</span>`:''} ${esc(f.t)}<div class="note">${f.d}・來源:${f.src}</div></div>`).join('')}<div class="note" style="margin-top:6px">對應題目:${esc(q.t.replace(/[?？]$/,''))}${ansOf(q)}</div></div>`:`<div class="ev"><span class="tag">${hit.v>=.5?'正向':hit.v>0?'部分':'負向'}</span> ${hit.cat?`<span class="tag">${hit.cat}</span>${hit.dom&&hit.dom!=='個人'?` <span class="tag">${hit.dom}</span>`:''}`:''}${DEV?(hit.tier==='platform'?`<span class="tag">政見・${hit.rank===1?'第一個提出 66.6%':'其他也提出 50%'}</span>`:hit.tier==='deed'?`<span class="tag">做過的事・${+(hit.v*100).toFixed(1)}%</span>`:''):''}<div>${esc(hit.t)}</div><div class="note">${hit.d?hit.d+'・':''}${hit.src?'來源:'+hit.src+'・':''}對應題目:${esc(q.t.replace(/[?？]$/,''))}${ansOf(q)}${hit.why?'・'+esc(hit.why):''}</div></div>`).join('')).join('')}${DEV?`<p style="margin:14px 0 4px"><b>分數怎麼算</b></p><div class="tblw"><table class="calc"><thead><tr><th>題目</th><th>依據層級</th><th>分數</th><th>權重</th><th>分數×權重</th></tr></thead><tbody>${calc.map(r=>`<tr><td>${esc(r.q.t.replace(/[?？]$/,''))}</td><td>${r.tier}</td><td>${(r.v*100).toFixed(1)}%</td><td>${r.ew===1&&r.m===1?'1':`${r.ew}×${r.m}=${+r.w.toFixed(2)}`}</td><td>${(r.v*r.w).toFixed(2)}</td></tr>`).join('')}</tbody><tfoot><tr><td colspan="3">合計</td><td>${+sd.toFixed(2)}</td><td>${sn.toFixed(2)}</td></tr><tr><td colspan="5">契合度 = ${sn.toFixed(2)} ÷ ${+sd.toFixed(2)} = <b>${sd?(sn/sd*100).toFixed(1):'—'}%</b></td></tr></tfoot></table></div><p class="note">權重 = 證據權重 × 您標的重要程度(不重要 0、普通 1、很重要 2);政黨推定的證據權重為 0.5,其餘為 1。</p>`:''}</details>`:''}</section>`}).join('')+
   `${DEV?'':scoreTable()}<div class="warn"><b>提醒</b><p class="note">以下紀錄<b>不影響契合度</b>(有罪確定的判決僅在您把「操守」標為重要時才計入),請自行判斷。</p>
-  ${cands().map(c=>{const d=remOf(c);return `<p><b>${c.n}</b>:${d.length?d.map(e=>esc(e.t)+'('+e.d+')').join(';'):'無需提醒的紀錄'}</p>`}).join('')}</div>
+  ${cands().map(c=>{const d=remOf(c);return `<div class="rem"><b>${c.n}</b>${d.length?`<ul>${d.map(e=>`<li><span class="rdate">${esc(e.d)}</span>${esc(e.t)}</li>`).join('')}</ul>`:'<p class="note">無需提醒的紀錄</p>'}</div>`}).join('')}</div>
   <button class="btn" style="width:100%" onclick="i=0;for(const k in ans)delete ans[k];render()">重新作答</button>`;
 }
 render();
