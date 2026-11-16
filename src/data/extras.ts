@@ -1,6 +1,7 @@
 import type { Entry, LegalRecord, Source } from './records'
 import { ACHIEVEMENTS } from './achievements'
 import { LEGISLATOR_ENTRIES } from './legislators'
+import { RECENT_ENTRIES } from './recent'
 
 const V = '2026-10-13'
 const pts = (id: number, title: string): Source => ({ outlet: '公視', url: `https://news.pts.org.tw/article/${id}`, title })
@@ -55,7 +56,7 @@ for (const key of NAMES) {
   EXTRA_LEGAL[key] = [violenceLegal(name)]
 }
 
-for (const src of [ACHIEVEMENTS, LEGISLATOR_ENTRIES]) {
+for (const src of [ACHIEVEMENTS, LEGISLATOR_ENTRIES, RECENT_ENTRIES]) {
   for (const [key, list] of Object.entries(src)) {
     EXTRA_ENTRIES[key] = [...(EXTRA_ENTRIES[key] ?? []), ...list]
   }

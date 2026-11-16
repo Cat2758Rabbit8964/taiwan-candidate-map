@@ -41,4 +41,4 @@ import { TVBS_REPORTS } from './coverageTvbs'
 export const EVENTS: CoverageEvent[] = GEN_EVENTS
 export const REPORTS: Report[] = [...GEN_REPORTS, ...TVBS_REPORTS]
 
-export const PILOT_QUERY_DATE = '2026-10-14'
+export const PILOT_QUERY_DATE = '2026-11-16'
