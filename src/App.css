@@ -137,3 +137,4 @@ section h4 { margin: 16px 0 6px; font-size: .95rem; }
 .cov-itable .cov-n { color: var(--muted); font-size: .8rem; }
 
 .cov-table th, .cov-table td { white-space: nowrap; }
+.cov-colname { font-weight: 600; fill: var(--fg); }

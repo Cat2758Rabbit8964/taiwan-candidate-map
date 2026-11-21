@@ -293,7 +293,7 @@ function ToneTable() {
             <th title="該媒體在民進黨欄的標題用字激烈程度平均,0 到 3">民進黨用字激烈度</th>
             <th title="該媒體在國民黨欄的標題用字激烈程度平均,0 到 3">國民黨用字激烈度</th>
             <th title="把(政黨欄,分數)當格子,比較該媒體與事實分析在各格的點數重疊比例,100% 為完全相同">分布相似度</th>
-            <th title="與事實分析在同一政黨欄、且正負方向相同的事件比例">方向一致</th>
+            <th title="與事實分析在同一政黨欄的事件中,方向一致的比例:事實有正負時,標題的正負要相同;事實為 0 分時不應有方向,標題也要是 0 分才算一致。">方向一致</th>
             <th title="同一政黨欄內,媒體分數減事實分析分數的平均;正值代表比事實更正面">平均偏差</th>
             <th>判斷</th>
           </tr>
@@ -316,8 +316,8 @@ function ToneTable() {
 
 
 /** 各政黨欄的標題用字激烈程度:灰條是全體平均,每個點是一則報導的分數(不看正負、不看事實分析) */
-const IH = 300
-const IM = { l: 44, r: 16, t: 14, b: 34 }
+const IH = 310
+const IM = { l: 44, r: 16, t: 14, b: 42 }
 const I_LEVELS = [3, 2, 1, 0]
 const I_NAMES = ['平鋪直敘', '輕度', '中度', '激烈']
 
@@ -344,12 +344,17 @@ function IntensityChart() {
       }).filter((x) => x.col >= 0),
     [],
   )
+  /** 底下的分數與灰條跟著目前顯示的媒體變:平常是全體,滑鼠移到或點選某家就變成該家 */
   const colAvg = useMemo(
     () => COLUMNS.map((_, i) => {
-      const xs = rows.filter((x) => x.col === i)
-      return { n: xs.length, avg: xs.length ? xs.reduce((a, x) => a + x.score, 0) / xs.length : 0 }
+      const xs = rows.filter((x) => x.col === i && (!active || x.r.outlet === active))
+      return {
+        n: xs.length,
+        avg: xs.length ? xs.reduce((a, x) => a + x.score, 0) / xs.length : 0,
+        mid: xs.length ? xs.filter((x) => x.score >= 2).length / xs.length : 0,
+      }
     }),
-    [rows],
+    [rows, active],
   )
 
   const cw = (W - IM.l - IM.r) / COLUMNS.length
@@ -413,10 +418,11 @@ function IntensityChart() {
             <g key={c}>
               {i > 0 && <line x1={IM.l + cw * i} x2={IM.l + cw * i} y1={IM.t} y2={IH - IM.b} className="cov-grid" />}
               <rect x={IM.l + cw * i + 6} y={y(colAvg[i].avg)} width={cw - 12} height={Math.max(0, y(0) - y(colAvg[i].avg))} className="cov-bar" />
-              <text x={IM.l + cw * (i + 0.5)} y={IH - 18} textAnchor="middle" className="cov-tick">{c}</text>
-              <text x={IM.l + cw * (i + 0.5)} y={IH - 4} textAnchor="middle" className="cov-tick">
-                {colAvg[i].n} 則・平均 {colAvg[i].avg.toFixed(2)}
+              <text x={IM.l + cw * (i + 0.5)} y={IH - 24} textAnchor="middle" className="cov-tick cov-colname">{c}</text>
+              <text x={IM.l + cw * (i + 0.5)} y={IH - 8} textAnchor="middle" className="cov-tick">
+                {colAvg[i].n ? `${active ?? '全體'}・平均 ${colAvg[i].avg.toFixed(2)}` : `${active ?? '全體'}・無報導`}
               </text>
+
             </g>
           ))}
           {shown.map((x) => {
@@ -620,7 +626,7 @@ export function CoverageDialog({ onClose }: { onClose: () => void }) {
       <section>
         <h3>各政黨相關新聞的用字激烈程度</h3>
         <p className="cov-sub">
-          只看標題用字有多激烈(0 平鋪直敘到 3 激烈),不分正面負面,也不含事實分析。每個點是一則報導的分數(同一格內點會重疊,位置只是錯開,不代表分數不同),灰條是該政黨欄全部報導的平均。下方可展開逐則列表。
+          只看標題用字有多激烈(0 平鋪直敘到 3 激烈),不分正面負面,也不含事實分析。每個點是一則報導的分數(同一格內點會重疊,位置只是錯開,不代表分數不同),灰條與底下的分數平常是全體平均,滑鼠移到或點選某家媒體,就變成該家的平均。下方可展開逐則列表。
         </p>
         <IntensityChart />
       </section>
@@ -647,6 +653,7 @@ export function CoverageDialog({ onClose }: { onClose: () => void }) {
           <li>報導的點:這則標題的寫法讓觀眾對某個政黨欄產生多大的正面或負面印象,−3 到 +3。與事實對錯無關。</li>
           <li>標題平鋪直敘就是 0;只有用字帶引導(如「慘了」「挨轟」「捷報」「打臉」)才給分。標題可把矛頭轉向另一陣營,那一點就畫在另一欄。</li>
           <li>星形(事實分析):只看事件本身。有官方認定、當事人承認或判決才給負分;只有質疑、當事人否認、尚無結論,給 0。</li>
+          <li>方向一致:只比同一政黨欄的事件。事實分析有正負時,標題的正負要相同;事實分析為 0 分(尚無認定)時不應有方向,標題也要是 0 分才算一致。綜合成一個比例。</li>
           <li>主詞不是該政黨的事件(被害、被攻擊、不起訴、駁回、互批)不算該黨負面。</li>
           <li>分數由查核團隊逐則判定,可能有誤。</li>
           <li>
