@@ -88,7 +88,7 @@ section h4 { margin: 16px 0 6px; font-size: .95rem; }
 .map-foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
 .why-news { margin-left: auto; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--fg); cursor: pointer; font-size: .9rem; }
 .why-news:focus-visible, .cov-leg:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.cov-dialog { width: min(820px, calc(100vw - 32px)); max-height: calc(100vh - 32px); }
+.cov-dialog { width: min(1240px, calc(100vw - 32px)); max-height: calc(100vh - 32px); }
 .cov-dialog h3 { margin: 18px 0 6px; font-size: 1rem; }
 .cov-note { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: .88rem; }
 .cov-sub { color: var(--muted); font-size: .85rem; margin: 2px 0 6px; }
@@ -128,3 +128,12 @@ section h4 { margin: 16px 0 6px; font-size: .95rem; }
 .bill-issues .bill-links { display: flex; margin-top: 2px; }
 .cov-hl { color: #c2570c; background: color-mix(in srgb, #c2570c 12%, transparent); padding: 0 4px; border-radius: 3px; }
 @media (prefers-color-scheme: dark) { .cov-hl { color: #ffb066; } }
+.cov-bar { fill: var(--muted); opacity: .2; }
+.cov-detail ol { margin: 4px 0 0; padding-left: 1.3em; }
+.cov-detail li { margin: 3px 0; }
+.cov-list { max-height: 360px; overflow-y: auto; margin-top: 8px; }
+.cov-itable th, .cov-itable td { text-align: center; white-space: nowrap; }
+.cov-itable td:first-child, .cov-itable th:first-child { text-align: left; }
+.cov-itable .cov-n { color: var(--muted); font-size: .8rem; }
+
+.cov-table th, .cov-table td { white-space: nowrap; }
